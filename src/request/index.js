@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: Fenghua Zhang
  * @Date: 2022-03-29 15:05:57
- * @LastEditTime: 2022-03-29 15:24:19
+ * @LastEditTime: 2022-03-29 16:37:24
  * @LastEditors: Fenghua Zhang
  */
 import axios from 'axios'
@@ -18,6 +18,23 @@ const instance = axios.create(axiosOption);
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
+    if (config.data) {
+        config.data = {
+            platform: "web",
+            requestUser: "1",
+            // token: getToken(),
+            sign: "aaaa-bbbb-cccc-ddd",
+            requestBody: config.data
+        }
+    } else {
+        config.data = {
+            platform: "web",
+            requestUser: "1",
+            // token: getToken(),
+            sign: "aaaa-bbbb-cccc-ddd",
+            requestBody: config.data
+        }
+    }
   return config;
 }, function (error) {
   // 对请求错误做些什么

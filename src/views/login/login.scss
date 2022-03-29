@@ -1,0 +1,19 @@
+.login_page{
+    background-color: #fff;
+    height: 100vh;
+    position: relative;
+    .login_box{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 300px;
+        border-radius: 5px;
+        &__header{
+            width: 170px;
+            filter: invert(38%);
+            margin: 10px auto;
+            display: block;
+        }
+    }
+}
