@@ -2,29 +2,40 @@
  * @Description: 
  * @Author: Fenghua Zhang
  * @Date: 2022-03-29 15:34:33
- * @LastEditTime: 2022-03-29 16:39:42
+ * @LastEditTime: 2022-03-31 11:39:27
  * @LastEditors: Fenghua Zhang
  */
-import React from 'react';
-import './login.scss';
+import React ,{useState} from 'react';
+import './login.less';
 import { Form, Input, Button } from 'antd';
 
 import { UserOutlined ,LockOutlined} from '@ant-design/icons';
-import { login } from '../api/base';
-const Login = () => {
+import { login } from '@/api/base';
+import { message } from 'antd';
+import userAction  from '@/store/user/actions';
+import { useNavigate } from 'react-router-dom';
+const Login = (prop) => {
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+
     const onFinish = (values) => {
-        login(...values).then(res=>{
-            console.log('res :>> ', res);
+        setLoading(true)
+        login(values).then(res=>{
+            userAction.changeUserInfo(res.data)
+            message.success('登录成功');
+            navigate('/home')
         })
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
+
     return (
         <div className='login_page'>
             <div className='login_box'>
-                <img className='login_box__header' src='http://xiaodeyun.oss-cn-hangzhou.aliyuncs.com/100000/20210326/202103261016569537761.jpg'></img>
+                <img className='login_box__header' alt='logo' src='http://xiaodeyun.oss-cn-hangzhou.aliyuncs.com/100000/20210326/202103261016569537761.jpg'></img>
                 <Form
                     name="basic"
                     onFinish={onFinish}
@@ -57,7 +68,7 @@ const Login = () => {
 
                     <Form.Item
                     >
-                        <Button type="primary" block htmlType="submit">
+                        <Button  loading={loading} type="primary" block htmlType="submit">
                             登录
                         </Button>
                     </Form.Item>
